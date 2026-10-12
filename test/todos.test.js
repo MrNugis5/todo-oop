@@ -10,7 +10,7 @@ test('Todo stores provided id and task', () => {
   assert.equal(todo.task, 'buy milk');
 });
 
-test('TodoController creates a new todo from request body', () => {
+test('TodoController creates a new todo from request body', async () => {
   TodoController.todos = [];
 
   const req = { body: { task: 'write tests' } };
@@ -21,7 +21,7 @@ test('TodoController creates a new todo from request body', () => {
     },
   };
 
-  TodoController.createTodo(req, res);
+  await TodoController.createTodo(req, res);
 
   assert.equal(TodoController.todos.length, 1);
   assert.equal(TodoController.todos[0].task, 'write tests');

@@ -14,11 +14,13 @@ class TodoControllerClass {
             newTask: newTodo
         })
     }
+
     getTodos(req, res) {
         res.json({
             tasks: this.todos
         })
-    }   
+    }
+
     updateTodo(req, res) {
         const todoId = req.params.id
         const updatedTask = req.body.task
@@ -37,8 +39,25 @@ class TodoControllerClass {
             message: "Todo updated",
             updatedTask: this.todos[todoIndex]
         })
-    } 
-}
+    }
 
+    deleteTodo(req, res) {
+        const todoId = req.params.id
+
+        const todoIndex = this.todos.findIndex((todo) => todo.id === todoId)
+
+        if (todoIndex < 0) {
+            res.status(404).json({
+                message: "Todo not found"
+            })
+            return
+        }
+
+        this.todos.splice(todoIndex, 1)
+        res.json({
+            message: "Todo deleted"
+        })
+    }
+}
 
 export const TodoController = new TodoControllerClass()

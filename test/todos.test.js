@@ -27,3 +27,24 @@ test('TodoController creates a new todo from request body', () => {
   assert.equal(TodoController.todos[0].task, 'write tests');
   assert.equal(payload.newTask.task, 'write tests');
 });
+
+test('TodoController updates an existing todo by id', () => {
+  TodoController.todos = [new Todo('abc', 'old task')];
+
+  const req = {
+    params: { id: 'abc' },
+    body: { task: 'updated task' },
+  };
+  let payload;
+  const res = {
+    json(value) {
+      payload = value;
+    },
+  };
+
+  TodoController.updateTodo(req, res);
+
+  assert.equal(TodoController.todos.length, 1);
+  assert.equal(TodoController.todos[0].task, 'updated task');
+  assert.equal(payload.updatedTask.task, 'updated task');
+});

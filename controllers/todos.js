@@ -14,6 +14,11 @@ class TodoControllerClass {
             newTask: newTodo
         })
     }
+    getTodos(req, res) {
+        res.json({
+            tasks: this.todos
+        })
+    }
 }
 
 export const TodoController = new TodoControllerClass()
